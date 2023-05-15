@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  node:
+    hostname: node
+    build:
+      context: ./docker/node
+      args:
+        APP_WORKDIR: ${APP_WORKDIR:-/usr/src/${APP_DIR}}
+        NODE_ENV: ${NODE_ENV:-development}
+    image: 'nassarx/nests:1.0'
+    volumes:
+      - './${APP_DIR}:${APP_WORKDIR:-/usr/src/${APP_DIR}}'
+    environment:
+      - PORT=${PORT:-3000}
+    ports:
+      - '${PORT:-3000}:${PORT:-3000}'
+      
+networks:
+  default:
+    name: nestjs_starter
